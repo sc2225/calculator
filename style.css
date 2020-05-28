@@ -1,4 +1,7 @@
-.page_wrap {
+
+body {
+    background-color: #BEC2C3;
+    font-family: 'Roboto', sans-serif;
 }
 
 .calculator_container {
@@ -11,14 +14,15 @@
     border: 2px solid black;
     border-radius: 5%;
     margin: 100px auto;
-    text-align: center;
+    background-color: #283D44;
 }
 
 #display_container{
-    width: 300px;
+    width: 340px;
     height: 60px;
     border: 2px solid black;
     margin: 40px auto;
+    background-color: #FFFFFF;
 
 }
 
@@ -26,13 +30,28 @@
     display: grid;
     grid-template-columns: repeat(4, 50px);
     grid-gap: 10px 40px;
-
+    margin: 25px;
 }
 
 .btn_digits {
     width: 75px;
     height: 55px;
-    
-    
-    
+    font-size: 25px;
+    background-color: #44859B;  
+
+
+}
+
+
+#AC {
+    background-color: #CE3333;
+}
+
+#\+, #\-, #x, #\/
+ {
+    background-color: #E8B9A9;
+}
+
+#\= {
+    background-color: #F7754A;
 }
