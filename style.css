@@ -4,10 +4,6 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
-.calculator_container {
-
-}
-
 #calculator_frame {
     width: 400px;
     height: 450px;
@@ -42,6 +38,9 @@ body {
 
 }
 
+#displayText {
+    font-size: 22px;
+}
 
 #AC {
     background-color: #CE3333;
