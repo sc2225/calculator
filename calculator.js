@@ -2,11 +2,13 @@ let displayValue = 0;
 //element 'disp' is the display
 let stringNumber = "";
 let result= 0;
-let firstNum = 0;
+let xNum = null;
+let yNum = null;
 let disp = document.querySelector('#displayText');
 console.log(disp.textContent + displayValue);
 let opFlag = ""; //Flag for if operator has already been set but user presses op again, then we know we
 //should automatically return the result
+let opCount = 0; //counter for how many times operator is pressed
 
 
 
@@ -31,20 +33,22 @@ function operate(operator, x, y) {
     //switch statement to determine which function to execute based on operation
     switch(operator) {
         case '+':
-            add(x, y);
+            result = add(x, y);
             break;
         case '-':
-            subtract(x, y);
+            result = subtract(x, y);
             break;
         case '*':
-            multiply(x, y);
+            result = multiply(x, y);
             break;
         case '/':
-            divide(x,y);
+            result = divide(x,y);
             break;
         default:
         ; 
     }
+
+    disp.textContent = result;
     
 }
 
@@ -80,50 +84,88 @@ const digits = document.querySelectorAll('.btn_digits');
 
 //iterates through all objects in collection 'buttons' and registers them to an event listener
 //'btn' is a parameter that takes in am object from 'buttons' --> this can be set to any name
+
 //Event listener below is for digits ONLY
 digits.forEach((btn) => {
+
     btn.addEventListener('click', (e) => { //'e' can be named anythign
-        //stringNumber holds whatever is inputted by user
-        if (opFlag  == "") {
-          stringNumber += btn.value;
-          disp.textContent += btn.value;
-       } else if (opFlag != "") {
-        
-       }
+
+        if (opFlag != "") {
+            disp.textContent = "";
+        }
+        disp.textContent += btn.value;   
+
+    });
+});
+
+
+//Event Listener below for operators ONLY
+const ops = document.querySelectorAll('.operator');
+ops.forEach((op) => {
+    op.addEventListener('click', (e) => { //'e' can be named anythign
+        opCount += 1;
+        if (opFlag == "") {
+            if (xNum == null) {
+                xNum = parseInt(disp.textContent); 
+            } else if (yNum == null) {
+                yNum = parseInt(disp.textContent);
+            }
+            opFlag = op.value;
+            
+        } else if (opFlag != "") {
+            if (opCount > 1) {
+                //automatically calculate results of two 
+                 console.log("HELP");
+                yNum = parseInt(disp.textContent);
+                operate(opFlag, parseInt(xNum), yNum);
+                disp.textContent = result;
+                xNum = result;
+            }
+
+            // } else if (opCount > 2) {
+            //     console.log("count over 2");
+            //     xNum = result;
+            //     yNum = parseInt(disp.textContent);
+            //     operate(opFlag, parseInt(xNum), yNum);
+
+            // }
+            
+        }
+
+        // if (op.value == "+") {
+        //     opFlag = "+";
+        //     result = parseInt(disp.textContent) + parseInt(result);
+        //     stringNumber = "";
+
+        // }
+
     });
 });
 
 
 
-const ops = document.querySelectorAll('.operator');
-ops.forEach((op) => {
-    op.addEventListener('click', (e) => { //'e' can be named anythign
-        //populate the display
-        let firstNum = parseInt(disp.textContent);
-        //check if theres a number in the display then add it to the result
-        if (stringNumber != "") {
-            if (op.value == "+") {
-                //add to results
-                opFlag = "+";
-               // result += stringNumber ;
-            } else if (op.value == "-") {
-                //subtract from result
-                //result -= stringNumber;
-                opFlag = "-";
-            } else if (op.value == "/") {
-                //result /= stringNumber;
-                opFlag = "/";
-            }
 
-            firstNum = 0;
-        } else {
+const equalBtn = document.querySelector('.equal');
+equalBtn.addEventListener('click', (e) => { //'e' can be named anythign  
 
-            //TODO: Need to figure out logic for when operators are pressed before entering numbers
- 
-        }
+    yNum = parseInt(disp.textContent);
+    console.log("xNum = " + xNum + " yNum = " + yNum + " opFlag = " + opFlag);
+    operate(opFlag, parseInt(xNum), yNum);
+    opFlag = "";
+    xNum = result;
+    // yNum = null;
+    opCount = 0;
 
-            
-       
-    });
+});
+
+
+const clearBtn = document.querySelector('.clear');
+clearBtn.addEventListener('click', (e) => { //'e' can be named anythign  
+    //clears the display and all variables
+    disp.textContent = "";
+    opFlag = "";
+    xNum = null;
+    yNum = null;
+    opCount = 0;
 });
 
