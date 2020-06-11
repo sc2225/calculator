@@ -29,7 +29,7 @@ body {
     margin: 25px;
 }
 
-.btn_digits {
+.btn_digits, .clear, .equal, .operator {
     width: 75px;
     height: 55px;
     font-size: 25px;
@@ -53,4 +53,9 @@ body {
 
 #\= {
     background-color: #F7754A;
+}
+
+#authorSignature {
+    font-size: 12px;
+    text-align: center;
 }

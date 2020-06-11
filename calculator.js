@@ -2,13 +2,15 @@ let displayValue = 0;
 //element 'disp' is the display
 let stringNumber = "";
 let result= 0;
+let opEqual = 0;
 let xNum = null;
 let yNum = null;
 let disp = document.querySelector('#displayText');
 console.log(disp.textContent + displayValue);
 let opFlag = ""; //Flag for if operator has already been set but user presses op again, then we know we
 //should automatically return the result
-let opCount = 0; //counter for how many times operator is pressed
+let opCount = 0;
+
 
 
 
@@ -25,11 +27,12 @@ function multiply(x, y) {
 }
 
 function divide(x, y) {
-    return x/y;
+    
+       return x/y;
 }
 
 function operate(operator, x, y) {
-
+    
     //switch statement to determine which function to execute based on operation
     switch(operator) {
         case '+':
@@ -43,12 +46,14 @@ function operate(operator, x, y) {
             break;
         case '/':
             result = divide(x,y);
+            
             break;
         default:
-        ; 
-    }
 
+    }
     disp.textContent = result;
+
+
     
 }
 
@@ -103,7 +108,7 @@ digits.forEach((btn) => {
 const ops = document.querySelectorAll('.operator');
 ops.forEach((op) => {
     op.addEventListener('click', (e) => { //'e' can be named anythign
-        opCount += 1;
+     
         if (opFlag == "") {
             if (xNum == null) {
                 xNum = parseInt(disp.textContent); 
@@ -113,31 +118,8 @@ ops.forEach((op) => {
             opFlag = op.value;
             
         } else if (opFlag != "") {
-            if (opCount > 1) {
-                //automatically calculate results of two 
-                 console.log("HELP");
-                yNum = parseInt(disp.textContent);
-                operate(opFlag, parseInt(xNum), yNum);
-                disp.textContent = result;
-                xNum = result;
-            }
-
-            // } else if (opCount > 2) {
-            //     console.log("count over 2");
-            //     xNum = result;
-            //     yNum = parseInt(disp.textContent);
-            //     operate(opFlag, parseInt(xNum), yNum);
-
-            // }
-            
+            //if operators pressed multiple times in sucession, do nothing
         }
-
-        // if (op.value == "+") {
-        //     opFlag = "+";
-        //     result = parseInt(disp.textContent) + parseInt(result);
-        //     stringNumber = "";
-
-        // }
 
     });
 });
@@ -148,14 +130,13 @@ ops.forEach((op) => {
 const equalBtn = document.querySelector('.equal');
 equalBtn.addEventListener('click', (e) => { //'e' can be named anythign  
 
-    yNum = parseInt(disp.textContent);
-    console.log("xNum = " + xNum + " yNum = " + yNum + " opFlag = " + opFlag);
-    operate(opFlag, parseInt(xNum), yNum);
-    opFlag = "";
-    xNum = result;
-    // yNum = null;
-    opCount = 0;
 
+        yNum = parseInt(disp.textContent);
+        console.log("xNum = " + xNum + " yNum = " + yNum + " opFlag = " + opFlag);
+        operate(opFlag, parseInt(xNum), yNum);
+        opFlag = "";
+        xNum = result;
+        opCount = 0;
 });
 
 
